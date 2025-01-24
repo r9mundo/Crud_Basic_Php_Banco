@@ -1,6 +1,22 @@
 <?php
 
-include './DB/connect.php';
+    include './DB/connect.php';
+    if(isset($GET['id'])){
+
+        $id_recebido = $_GET['id'];
+
+        $sql = "SELECT * FROM cliente WHERE id = $id_recebido";
+        $result = mysqli_query($conn,$sql);
+
+        $cliente = mysqli_fetch_assoc($result);
+
+
+        var_dump($result);
+    
+    }else{
+        header ('location: index.php');
+    }
+
 
 ?>
 
@@ -16,19 +32,24 @@ include './DB/connect.php';
     <header>
         <ul>
             <li> <a href="index.php"> Cadastrar </a> </li>
-            <li> <a href="listar.php"> Cadastrar </a> </li>
+            <li> <a href="listar.php"> Lista </a> </li>
 
         </ul>
     </header>
-    <h1>Cadastro de Cliente</h1>
+    <h1>Editar Cliente</h1>
     <form method="POST" action="cadastra_cli.php">
-        <input type="text" name="nome" id="nome" placeholder="Digite seu nome">
+        
+            
+
+
+        </div>
+        <input type="text" name="nome" id="nome" placeholder="Digite seu nome" value="<?php echo $cliente['nome']; ?>" >
         <br>
-        <input type="text" name="cpf" id="cpf" placeholder="Digite seu CPF">
+        <input type="text" name="cpf" id="cpf" placeholder="Digite seu CPF" value="<?php echo $cliente['cpf']; ?>" >
         <br>
-        <input type="text" name="fone" id="fone" placeholder="Digite seu telefone">
+        <input type="text" name="fone" id="fone" placeholder="Digite seu telefone" value="<?php echo $cliente['fone']; ?>" >
         <br>
-        <input type="email" name="email" id="email" placeholder="Digite seu email">
+        <input type="email" name="email" id="email" placeholder="Digite seu email" value="<?php echo $cliente['email']; ?>" >
         <br>
         <input type="password" name="pass" id="pass" placeholder="Digite sua senha">
         <input type="password" name="conf_pass" id="conf_pass" placeholder="Confirme sua senha">

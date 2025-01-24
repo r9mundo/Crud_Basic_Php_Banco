@@ -1,6 +1,10 @@
 <?php
 
 include './DB/connect.php';
+
+var_dump($_POST);
+//$_POST é uma variavel global do php
+
 if(isset($_POST['cadastrar'])){
 
 $nome = $_POST['nome'];
