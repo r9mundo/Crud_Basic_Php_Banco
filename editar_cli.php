@@ -1,23 +1,43 @@
 <?php
-
+    // 1 - conecta ao banco
     include './DB/connect.php';
-    if(isset($GET['id'])){
+    
+    // 2 - receber o id via GET
+    if(isset($_GET['id'])){
 
         $id_recebido = $_GET['id'];
-
+        // 3 - selecionar o cliente pelo ID
         $sql = "SELECT * FROM cliente WHERE id = $id_recebido";
+        // 4 - converter para um array 
         $result = mysqli_query($conn,$sql);
 
         $cliente = mysqli_fetch_assoc($result);
 
+        //DEBUGGING 
 
-        var_dump($result);
+        var_dump($cliente);
     
-    }else{
+    }
+    else{
         header ('location: index.php');
     }
 
+if(isset($_POST['editar']))
+{
+    $nome = $_POST['nome'];
+    $email = $_POST['email'];
+    $cpf = $_POST['cpf'];
+    $fone = $_POST['fone'];
 
+    $sql_update = " UPDATE cliente SET nome= '$nome', cpf= '$cpf', email= '$email', fone= '$fone' WHERE id = $id_recebido ";
+
+    $result_update = mysqli_query($conn,$sql_update);
+
+    if($result_update){
+        echo '<script> alert("Cliente atualizado com sucesso")</script>';
+    }
+
+}
 ?>
 
 <!DOCTYPE html>
@@ -26,7 +46,9 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Cadastro de Cliente</title>
-    <link rel='stylesheet' href='<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">'>
+
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
+    
 </head>
 <body>
     <header>
@@ -37,11 +59,8 @@
         </ul>
     </header>
     <h1>Editar Cliente</h1>
-    <form method="POST" action="cadastra_cli.php">
+    <form method="POST">
         
-            
-
-
         </div>
         <input type="text" name="nome" id="nome" placeholder="Digite seu nome" value="<?php echo $cliente['nome']; ?>" >
         <br>
@@ -51,9 +70,10 @@
         <br>
         <input type="email" name="email" id="email" placeholder="Digite seu email" value="<?php echo $cliente['email']; ?>" >
         <br>
-        <input type="password" name="pass" id="pass" placeholder="Digite sua senha">
-        <input type="password" name="conf_pass" id="conf_pass" placeholder="Confirme sua senha">
-        <input class ='btn-sucess'type="submit" name="cadastrar" value="Cadastrar">
+    
+        <input class='btn btn-success'type="submit" name="editar" value="Editar">
+        <button type="reset" class= "btn btn-danger">Cancelar</button>
     </form>
+
 </body>
 </html>
