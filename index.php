@@ -16,7 +16,7 @@ include './DB/connect.php';
     <header>
         <ul>
             <li> <a href="index.php"> Cadastrar </a> </li>
-            <li> <a href="listar.php"> Cadastrar </a> </li>
+            <li> <a href="listar.php"> Listar </a> </li>
 
         </ul>
     </header>
